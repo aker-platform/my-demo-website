@@ -27,9 +27,10 @@ export const getPortfolioWithHoldings = query({
     // Fetch current prices for all holdings
     const holdingsWithPrices = await Promise.all(
       holdings.map(async (holding) => {
+        const normalizedTicker = holding.ticker.toUpperCase().trim();
         const priceData = await ctx.db
           .query("etfPrices")
-          .withIndex("by_ticker", (q) => q.eq("ticker", holding.ticker))
+          .withIndex("by_ticker", (q) => q.eq("ticker", normalizedTicker))
           .first();
 
         const currentPrice = priceData?.currentPrice || holding.avgCost;
@@ -112,6 +113,7 @@ export const addHolding = mutation({
       name: args.name,
       shares: args.shares,
       avgCost: args.avgCost,
+      totalCost: args.shares * args.avgCost,
       purchaseDate: args.purchaseDate,
       notes: args.notes,
     });

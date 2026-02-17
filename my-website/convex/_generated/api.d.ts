@@ -9,7 +9,9 @@
  */
 
 import type * as etfPrices from "../etfPrices.js";
+import type * as import_ from "../import.js";
 import type * as portfolios from "../portfolios.js";
+import type * as tickerResolver from "../tickerResolver.js";
 
 import type {
   ApiFromModules,
@@ -19,7 +21,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   etfPrices: typeof etfPrices;
+  import: typeof import_;
   portfolios: typeof portfolios;
+  tickerResolver: typeof tickerResolver;
 }>;
 
 /**
